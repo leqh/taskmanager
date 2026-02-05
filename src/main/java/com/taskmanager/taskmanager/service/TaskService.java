@@ -7,6 +7,8 @@ import com.taskmanager.taskmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -21,6 +23,21 @@ public class TaskService {
                 .orElseThrow(() -> new Exception("User not found"));
 
         task.setUser(user);
+        return taskRepository.save(task);
+    }
+
+    public List<Task> getTaskByUser(Long userId) throws Exception {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        return taskRepository.findByUser(user);
+    }
+
+    public Task markTaskCompleted(Long taskId) throws Exception {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new Exception("Task not found"));
+
+        task.setCompleted(true);
         return taskRepository.save(task);
     }
 }
