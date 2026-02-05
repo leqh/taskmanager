@@ -44,4 +44,15 @@ public class TaskController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long taskId) {
+        try {
+            taskService.deleteTask(taskId);
+            return ResponseEntity.ok("Task deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
 }

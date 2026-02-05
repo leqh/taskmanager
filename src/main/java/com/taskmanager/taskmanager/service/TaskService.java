@@ -40,4 +40,11 @@ public class TaskService {
         task.setCompleted(true);
         return taskRepository.save(task);
     }
+
+    public void deleteTask(Long taskId) throws Exception {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new Exception("Task not found"));
+
+        taskRepository.delete(task);
+    }
 }
